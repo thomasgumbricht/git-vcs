@@ -23,18 +23,204 @@ share: true
 
 ### SSH keys
 
-[Dual SSH  keys](https://gist.github.com/jexchan/2351996)
+To add a second SSH key, with a few modifications outlined below you can follow the instructions at GitHub's page [Generating a new SSH key and adding it to the ssh-agent](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent).
 
+[Dual SSH  keys](https://gist.github.com/jexchan/2351996)
+Setting up a second pair of SSH keys (Mac OSX).
+
+
+Open a <span class='app'>terminal</span> window, and generate a SSH key for an email account that you have not yet generated a key for:
+
+<span class='terminal'>$ ssh-keygen -t rsa -b 4096 -C "your_other_email@example.com"</span>
+
+DO **NOT** accept the default with the returned message:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/"youruser"/.ssh/id_rsa):
+```
+
+as this is probably the name of your already existing key. Instead enter the full path to a new file in the path <span class='file'>/Users/"youruser"/.ssh/</span>, indicating the GitHub account for which this SSH key is intended. Let us say that your second GitHub account is "my_2nd_github_account", then answer like this:
+
+```
+Generating public/private rsa key pair.
+Enter file in which to save the key (/Users/"youruser"/.ssh/id_rsa_my_2nd_github_account):
+```
+
+Once the file is saved, you will be prompted for a passphrase, twice:
+
+```
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+```
+
+The SSH key will then be saved in two files, reported at the command line:
+
+```
+Your identification has been saved in /Users/"youruser"/.ssh/id_rsa_my_2nd_github_account.
+Your public key has been saved in /Users/"youruser"/.ssh/id_rsa_my_2nd_github_account.pub.
+```
+
+Followed by details on your SSH key:
+
+```
+The key fingerprint is:
+SHA256:+AseCretCodeWithDiffereNtAScIICodedSign&nrs your_other_email@example.com
+
+The key's randomart image is:
++---[RSA 4096]----+
+|            o.o  |
+|            .= E.|
+|             .B.o|
+|              .= |
+|        S     = .|
+|       . o .  .= |
+|        . . . oo.|
+|             . o+|
+|              .o.|
++----[SHA256]-----+
+```
+
+Start the ssh-agent in the background:
+
+<span class='terminal'>$ eval "$(ssh-agent -s)"<(span)>
+
+The command returns the pid (system tracker for the process)
+
+```
+Agent pid 16172
+```
+
+You now have to open the file <span class='file'>~/.ssh/config</span> and edit it so that it points towards your new SSH key:
+
+<span class='terminal'>pico ~/.ssh/config</span>:
+
+```
+Host github.com-my_2nd_github_account
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_rsa_my_2nd_github_account
+```
+
+
+Add your new SSH private key to the ssh-agent and store your passphrase in the keychain:
+
+<span class='terminal'>$ ssh-add -K ~/.ssh/id_rsa_my_2nd_github_account</span>
+
+```
+Identity added: /Users/"youruser"/.ssh/id_rsa_my_2nd_github_account (your_other_email@example.com)
+```
+
+With your second SSH key setup on your machine, the registering of the SSH key in your GitHub account ("my_2nd_github_account"), is exactly like before.
 
 ### Creating a new GitHub repo
 
 If I have understood correctly, you can only create an online GitHub repo using a browser and being logged in to your GitHub account. Explained in the GitHub page on [Creating a new repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-new-repository). However, you only need to create the repo, everything else can be done from your local command line as outlined on another of GitHub´s help pages [Adding an existing project to GitHub using the command line](https://help.github.com/en/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line).
 
+#### Creating a new gh-pages blog repo
+
+As an example of setting up a repo after only creating it, I will show how to create a repo for _gh-pages_ - that is the GitHub system for free publishing of web-pages using [Jekyll](). This section was inspired by the blog post [Creating a clean gh-pages branch](https://gist.github.com/ramnathv/2227408).
+
+To learn more about ... see my pages on. A GitHub repo for publishing web-pages does not only use the default branch _gh-pages_, _gh-pages_ must also replace the _master_ branch. Thus, the setup of _gh-pages_ using the local command line tool is a bit more complicated compared to setting up an ordinare repo with branches.
+
+First you have to go to your online [GitHub]() account and craete a new repo. Just the repo a name, nothing else, then click the <span class='button'></span>.
+
+<figure>
+<img src="../../images/github-create-a-new-repo-git_vcs.png">
+<figcaption> Github - Create a new repository.</figcaption>
+</figure>
+
+Open a <span class='app'>Terminal</span> window and change directory <span class='terminalapp'>cd</span> to the parent folder where. Create a new directory, the easiest is to name it identical with your newly create online repo:
+
+<span class='terminal'>$ mkdir git-vcs</span>
+
+<span class='terminalapp'>cd</span> to the new directory and initiate git:
+
+<span class='terminal'>$ cd git-vcs<br>$ git init</span>
+
+If you check the branch of your local repo:
+
+<span class='terminal'>$ git branch</span>
+
+```
+\* master
+```
+
+As noted above, for GitHub to be used for publishing web-pages, you need to replace _master_ with _gh-pages_, **not** as a new branch. But an an _orphan_ that takes the place of _master_. This is accomplished with the command:
+
+<span class='terminal'>$ git checkout --orphan gh-pages</span>
+
+```
+Switched to a new branch 'gh-pages'
+```
+
+If you rerun the command:
+
+<span class='terminal'>$ git branch</span>
+
+```
+\* gh-pages
+```
+
+### add remote
+
+Your local account is not linked to any of your online GitHub repos. To link it execute the command:
+
+<span class='terminal'>$ git remote add origin git@github.com:karttur/git-vcs.git</span>
+
+Before we can _push_ to our, completely empty, online GitHub repo you must create, _stage_ and _commit_ some content.
+
+### Create some content
+
+At this stage you need to create some content, either a complete jekyll page, or you can start with a README.md:
+
+<span class='terminal'>$ pico README.md</span>
+
+```
+# blog on command line based git processing
+```
+
+Hit [ctrl]+[X] to exit <span class='terminalapp'>pico</span> and save the edits by pressing <span class='terminal'>Y</span> when asked.
+
+### _stage_ and _commit_
+
+_stage_ and _commit_ the changes you have made, they will belong the branch _gh-pages_:
+
+<span class='terminal'>$ git add .<br>$ git commit -m 'initial commit'</span>
+
+```
+[gh-pages (root-commit) aa6a314] initial commit
+ X files changed, Y insertions(+)
+ create mode ...
+ ...
+```
+
+### Push to origin
+
+The local repo now contains a single branch, _gh-pages_, with some novel content that is _staged_ and _commited_. _push_ the content of the repo to your online account:
+
+<span class='terminal'>$ git push origin gh-pages</span>
+
+```
+Enumerating objects: 95, done.
+Counting objects: 100% (95/95), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (88/88), done.
+Writing objects: 100% (95/95), 3.31 MiB | 3.68 MiB/s, done.
+Total 95 (delta 4), reused 0 (delta 0)
+remote: Resolving deltas: 100% (4/4), done.
+To github.com:karttur/git-vcs.git
+ * [new branch]      gh-pages -> gh-pages
+```
+
+#### _stage_ and _commit_ changes
+
+I created a complete suite of Jekyll pages, the blog you are looking at now. But I forgot to update my Jekyll configuration file, <span class='file'>\_config.yml</span>. I also added a figure and this post.
+
+Having fixed and saved the error, I ran the following sequence of commands:
 
 
-### Creating a new gh-pages blog repo
-
-To be completed
+\-am "\_config.yml update"ssh-add -K ~/.ssh/id_rsa_karttur
 
 ### Fork Karttur geoimagine
 
