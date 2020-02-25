@@ -18,13 +18,13 @@ share: true
 
 ## Introduction
 
-This post covers _git_ version control with a shared _master_ repository on local machines. The shared _master_ is not used for active development, but is more of a container for holding versions that stem from _clones_. The development only happen in the _clones_ and the _master_ just receives _pushes_ and send out _pull_ requests from other _clones_.
+This post covers git version control with a shared _master_ repository on local machines. The shared _master_ is not used for active development, but is more of a container for holding versions that stem from _clones_. The development only happen in the _clones_ and the _master_ just receives _pushes_ and send out _pull_ requests from _clones_.
 
 This post is mainly based on different parts from the tutorial series [Learn Git with Bitbucket Cloud](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud). Links to relevant pages are given in different sections below.
 
 ## Prerequisites
 
-You need to install <span class='terminalapp'>git</span> for commandline use as outlined in the [parallel post on Local git control](../blog-git-local-use)
+You need to install git for command line use as outlined in the parallel post on [Local git control](../git-local-use)
 
 ## Create directory with git control
 
@@ -34,7 +34,7 @@ Create a new, empty, directory. To use the <span class='app'>Terminal</span> fir
 
 You can also just type <span class='terminal'>$ cd</span> in the <span class='app'>Terminal</span> window, then open a <span class='app'>Finder</span> window, navigate the the parent folder and drag the directory icon of the parent to the <span class='app'>Terminal</span> window.
 
-You are now ready to create a new directory, that will be converted to a shared _master_ <span class='terminalapp'>git</span> repository in the next section. By convention, shared repos end with _.git_ as an extension of the directory name. For this tutorial, you are going to crate a shared repo, and if you want to follow the convention you should name it, for instance _git-test-dir.git_.
+You are now ready to create a new directory, that will be converted to a shared _master_ repository in the next section. By convention, shared repos end with _.git_ as an extension of the directory name. For this tutorial, you are going to create a shared repo, and if you want to follow the convention you should name it, for instance _git-test-dir.git_.
 
 Make sure the <span class='app'>Terminal</span> points towards the parent directory, and create the new directory with the <span class='terminalapp'>mkdir</span> command:
 
@@ -52,7 +52,9 @@ To create a shared _master_ you must add the parameter _\-\-bare_ to the _init_ 
 
 The response will be something like
 
-<span class='terminal'>Initialized empty Git repository in path/to/git-test-dir.git</span>
+```
+Initialized empty Git repository in path/to/git-test-dir.git
+```
 
 For details on [Git init and the \-\-bare option](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init).
 
@@ -134,7 +136,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 
 ## Stage and commit
 
-As in the previous post on [Local git control](../blog-git-local-use), you have to _stage_ and then _commit_ any changes before you can _pull_ or _push_ them. First _stage_ the new file:
+As in the previous post on [Local git control](../git-local-use), you have to _stage_ and then _commit_ any changes before you can _pull_ or _push_ them. First _stage_ the new file:
 
 <span class='terminal'>$ git add Chapters.md</span>
 

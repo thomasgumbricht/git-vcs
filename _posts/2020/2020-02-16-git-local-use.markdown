@@ -17,70 +17,23 @@ share: true
 
 ## Introduction
 
-This post covers _git_ version control system (VCS) for local machines. If you are a _git_ newbie, you can view the Youtube [Introduction to Git - Core Concepts](https://www.youtube.com/watch?v=uR6G2v_WsRA&t=475s) by David Mahler or if you prefer to read, the blog post [Tutorial: Git for Absolutely Everyone](https://thenewstack.io/tutorial-git-for-absolutely-everyone/) by Michelle Gienow. This post is inspired by these two sources.
+This post covers git Version Control System (VCS) for local machines. If you are a git (command line) newbie, you can view the Youtube [Introduction to Git - Core Concepts](https://www.youtube.com/watch?v=uR6G2v_WsRA&t=475s) by David Mahler or if you prefer to read, the blog post [Tutorial: Git for Absolutely Everyone](https://thenewstack.io/tutorial-git-for-absolutely-everyone/) by Michelle Gienow. This post is inspired by these two sources.
 
 The tutorial series [Learn Git with Bitbucket Cloud](https://www.atlassian.com/git/tutorials/learn-git-with-bitbucket-cloud) is more in depth and links to relevant pages in that tutorial series are given in different sections below. The most comprehensive source available is probably the book [Pro Git - Everything you need to know about git](https://git-scm.com/book/en/v2/) by Scott Chacon and Ben Straub.
 
-Every git project is bound to a repository (or repo for short) that always resides inside a directory (synonym: folder). A repo can either be a _master_ (~original) or a _clone_ (~copy). (Unfortunately the term _master_ can mean several different things in git, but yu just have to learn to live with it.) The difference between an ordinary directory and a repository is that the repository contains a system of, usually hidden, files and folders that track, log and save changes, and allows the use of the git toolbox for tracking, merging and restoring different versions.
+Every git project is bound to a repository (or repo for short) that always resides inside a directory (synonym: folder). A repo can either be a _master_ (~original) or a _clone_ (~copy). Unfortunately the term _master_ can mean several different things in git, but you just have to learn to live with it. The difference between an ordinary directory and a repository is that the repository contains a system of, usually hidden, files and folders that track, log and save changes in the directory. These hidden git files allow the use of the git toolbox for tracking, merging and restoring different versions of the documents in the working directory.
 
-A repository consists of three “trees” maintained and tracked by git. The first tree is the _working directory_ which holds the actual files, it is like an ordinary directory with sub-directories and files. The second tree is the _index_ (or _staging_ areas) and the third tree is the _head_ (or history) tree which contains all _commits_ and also points to the last _commited_ versions. _stage_ and _commit_ are git jargon, and you can picture them as meaning adding and locking (saving) changes. In git you can always go back to locked savings and explore who made what changes at which stage.
+A repository consists of three “trees” maintained and tracked by git. The first tree is the _working directory_ which holds the "normal" files, it is like an ordinary directory with sub-directories and files. The second tree is the _index_ (or _staging_ area) and the third tree is the _head_ (or history) tree which contains all _commits_ and also points to the last _commited_ versions. _stage_ and _commit_ are git jargon, and you can picture them as meaning adding and locking (saving) changes. In git you can always go back to locked savings and explore who made what changes at which stage.
 
-Two useful git commands for keeping track of what has been done and what is pending, are: <span class='terminalapp'>git log</span> (<span class='terminalapp'>git reflog</span>) for tracking the git command history, and <span class='terminalapp'>git status</span> to see what is pending.
+Two useful git commands for keeping track of what has been done and what is pending, are: <span class='terminalapp'>git log</span> or <span class='terminalapp'>git reflog</span> for tracking the git command history, and <span class='terminalapp'>git status</span> to see what is pending.
 
 ## Prerequisites
 
-This tutorial relies heavily on the <span class='app'>Terminal</span> command tool, if you are not acquainted with the command line, the [Command line crash course (pdf)](https://www.computervillage.org/articles/CommandLine.pdf) will teach you most things you need to know.
-
-## Setup git for local use
-
-Check out if you have the command line tool for
-[git](https://git-scm.com) installed by opening a <span class='app'>Terminal</span> window and type:
-
-<span class='terminal'>$ git version</span>
-
-If your system does not have git installed, download (g)it from the [git official download page](https://git-scm.com/downloads).
-
-If your version is outdated compared to the [git official download page](https://git-scm.com/downloads), you can instead use git itself for updating:
-
-<span class='terminal'>$ git clone https://github.com/git/git</span>
-
-### Check and setup user name
-
-Every git repository is linked to a user name. If you a dominating, or single git user on your machine you can add a global user name to your local machine git. If you have more than one git user you can set the user name in each local repo. The local user over-rides any global, so you can set both types in the same machine. For more information, please vist the GitHub page [Setting your username in Git](https://help.github.com/en/articles/setting-your-username-in-git).
-
-#### Global Git user names
-
-To check if you have a global git user name set, open a <span class='app'>Terminal</span> window and type:
-
-<span class='terminal'>$ git config \-\-global user.name</span>
-
-If you had no global user but require one, set the git global user name with the command:
-
-<span class='terminal'>$ git config \-\-global user.name _username_</span>
-
-#### Local (repository) user names
-
-To set local (per repo) user names you have to sequentially change directory <span class='terminal'>cd</span> to each repo and then check/set the user name.
-
-<span class='terminal'>$ git config user.name</span>
-
-<span class='terminal'>$ git config user.name _repo-username_</span>
-
-### Check and set email
-
-See the official GitHub page on [Setting your commit email address](https://help.github.com/en/articles/setting-your-commit-email-address) to understand your alternatives for open or restricted email addresses.
-
-The principles for setting your git email address is similar to setting the git user name. Here is, for example, how to check and set a global email:
-
-<span class='terminal'>git config \-\- user.email</span>
-
-<span class='terminal'>$ git config \-\- user.email _email@example.com_</span>
-
-For local (per repo) setting of email you have to sequentially change directory to each local repo for which to set the email.
+git must be installed, if you need assistance look at the post on [install git for command line](../git-commandline-install). This tutorial relies heavily on the <span class='app'>Terminal</span> command tool, if you are not acquainted with the command line, the [Command line crash course (pdf)](https://www.computervillage.org/articles/CommandLine.pdf) will teach you most things you need to know.
 
 ## Create directory with git control
 
-Create a new, empty, directory. To use the <span class='app'>Terminal</span> first change directory (<span class='terminalapp'>cd</span>) to the parent folder under where you want to create the new directory.
+Create a new, empty, directory on a local drive. To use the <span class='app'>Terminal</span>, first change directory (<span class='terminalapp'>cd</span>) to the parent folder under where you want to create the new directory.
 
 <span class='terminal'>$ cd path/to/parent/directory</span>
 
@@ -94,13 +47,15 @@ You can also just type <span class='terminal'>$ cd</span> in the <span class='ap
 
 ## git Init
 
-The default initialisation [command <span class='terminalapp'>git init</span>](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init) converts a directory to a _master_ repository with a hidden <span class='file'>.git</span>  directory. _master_ repos are intended for development work, with the content typically _cloned_ by other users; edits made in _cloned_ repos, however, can not be _pushed_ back into the _master_. If you want a local _master_ repo that is more of a container and where development actually takes place in _clones_, then you should have a look in the [parallel post on Shared master local git control](../blog-git-local-bare-master). For this post, with the _master_ being the site of development, turn your newly created directory into a repository:
+The default initialisation [command <span class='terminalapp'>git init</span>](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init) converts a directory to a _master_ repository with a hidden <span class='file'>.git</span>  directory. _master_ repos are intended for development work, with the content typically _cloned_ by other users; edits made in _cloned_ repos, however, can not be _pushed_ back into the _master_. If you want a local _master_ repo that is more of a container and where development actually takes place in _clones_, then you should have a look in the parallel post on [Shared master local git control](../git-local-bare-master). For this post, with the _master_ being the site of development, turn your newly created directory into a repository:
 
 <span class='terminal'>$ git init</span>
 
 The response will be something like
 
-<span class='terminal'>Initialized empty git repository in path/to/git-test-dir/.git/</span>
+```
+Initialized empty git repository in path/to/git-test-dir/.git/
+```
 
 If you now check the content of your directory by listing (<span class='terminalapp'>ls</span>) its content:
 
@@ -110,7 +65,7 @@ it will contain no (visible) file. If you instead use list all, <span class='ter
 
 <span class='terminal'>$ ls -a</span>
 
-You can explore the <span class='file'>.git</span> folder by changing directory <span class='terminalapp'>cd</span> and, listing <span class='terminalapp'>ls</span>. But that is beyond this tutorial. All the version control and tracking that you do using _git_ will be registered under the hidden directory.
+You can explore the <span class='file'>.git</span> folder by changing directory <span class='terminalapp'>cd</span> and, listing <span class='terminalapp'>ls</span>. But that is beyond this tutorial. All the version control and tracking that you do using git will be registered under the hidden directory.
 
 Link to in depth exploration of [git init at Atlassian Bitbucket](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-init).
 
@@ -132,15 +87,22 @@ Hit [ctrl]+[X] to exit <span class='terminalapp'>pico</span> and save the edits 
 
 ## Create a document
 
-With your git repo (the directory with the hidden <span class='file'>.git</span> directory) setup, create a simple document, for instance an <span class='file'>.md</span> file with an outline of chapters or sections. This first version is going to become your initial _master_.
+With your git repo (the directory with the hidden <span class='file'>.git</span> directory) setup, create a simple document, for instance a markdown file with an outline of chapters or sections. This first version is going to become your initial _master_. You can use <span class='terminalapp'>pico</span> without having created the file before:
+
+<span class='terminal'>$ pico Chapters.md</span>
+
+```
+# Chapters in book on ...
+...
+```
 
 ## Clone I
 
-The core idea of <span class='terminalapp'>git</span> is to have one established _master_ document (or project) and then share or work on copies (or clones). Creating copies from the _master_ is done with the command <span class='terminalapp'>git clone _master-directory_ [_clone-directory_] </span>. If you omit the _clone-directory_ from the command, the clone will end up inside the _master-directory_:
+The core idea of git is to have one established _master_ document (or project) and then share or work on copies (or clones). The differences between a _clone_ and the _master_ can then be reviewed and edits accepted or rejected (or edited further). Creating copies from the _master_ is done with the command <span class='terminalapp'>git clone _master-directory_ [_clone-directory_] </span>. If you omit the _clone-directory_ from the command, the clone will end up inside the _master-directory_:
 
 <span class='terminal'>$ git clone path/to/git-test-dir</span>
 
-You can only do this once, as the cloning process will detect that the sub-directory is not empty if you try to run the command twice. Thus it is often better to explicitly state the target, or clone, directory, where I prefer to give both a date and version for easier identification:
+You can only do this once, as the cloning process will detect that the sub-directory is not empty if you try to run the command more then once. Thus it is often better to explicitly state the target, or clone, where I prefer to give both a date and version for easier identification:
 
 <span class='terminal'>$ git clone path/to/git-test-dir path/to/git-test-dir-YYYYMMDD-vX</span>
 
@@ -148,15 +110,15 @@ When you execute the <span class='terminalapp'>git clone</span> command you will
 
 <span class='terminal'>warning: You appear to have cloned an empty repository.<br>done.</span>
 
-To actually get any content with the cloning you must add (_stage_ in the <span class='terminalapp'>git</span> jargon) the files (or folders) you want to clone, and then _commit_ to the changes, while also including a message.
+To actually get any content with the cloning you must add (_stage_ in the git jargon) the files (or folders) you want to clone, and then _commit_ to the changes, while also including a message.
 
 Link to [Bitbucket Atlassian in depth page on git clone command](https://www.atlassian.com/git/tutorials/setting-up-a-repository/git-clone).
 
 ### git init + git clone
 
-As an alternative to <span class='terminalapp'>git clone</span> into an empty (or non-existing) directory, you can create the git repo first, and then clone into a sub-directory; the sequence of commands then become to create a directory, initialize git and then clone:
+As an alternative to <span class='terminalapp'>git clone</span> into an empty (or non-existing) directory, you can create the git repo first, and then clone into this repo; the sequence of commands then become to create a directory, initialise git and then clone:
 
-<span class='terminal'>$ mkdir git-clone-dir<br>$ cd git-clone-dir<br>$ git init<br>$ git clone path/to/path/to/git-test-dir</span>
+<span class='terminal'>$ mkdir git-clone-dir<br>$ cd git-clone-dir<br>$ git init<br>$ git clone path/to/git-test-dir</span>
 
 ### git remote
 
@@ -169,11 +131,11 @@ The response should be something like:
 origin	path/to/git-test-dir (fetch)
 origin	path/to/git-test-dir (push)
 ```
-where _origin_ is the branch in the _master_ repo where _fetch_ and _push_ operates.
+where _origin_ is the default alias given to the _master_ repo where _fetch_ and _push_ operates. _fetch_ and _push_ are git commands for retrieving and sending data, they will be explained below.
 
 ## Stage: git add
 
-Make sure your <span class='app'>Terminal</span> window points to your original directory (_master_ repo in the <span class='terminalapp'>git</span> jargon), then check the status:
+Make sure your <span class='app'>Terminal</span> window points to your original directory (_master_), then check the status:
 
 <span class='terminal'>$ git status</span>
 
@@ -193,7 +155,7 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-This tells us that we have two new (untracked) files that have not been added to the tracking process. In the <span class='terminalapp'>git</span> jargon, adding a file to the tracking process is called _staging_, but the command is <span class='terminalapp'>git add</span>. To _stage_ the two existing documents run the commands:
+This tells us that we have two new (untracked) files that have not been added to the tracking process. In the git jargon, adding a file to the tracking process is called _staging_, but the command is <span class='terminalapp'>git add</span>. To _stage_ the two existing documents run the commands:
 
 <span class='terminal'>$ git add Chapters.md<br>
 $ git add README.md</span>
@@ -230,7 +192,7 @@ The message tells us how to _unstage_ a file (if we regret the _staging_), and t
 
 <span class='terminal'>$ git commit</span>
 
-On Mac OSX it will open the text editor <span class='terminalapp'>Vim</span>, and the terminal window will look similar to this (I have added my commit message below though):
+On Mac OSX this command opens the text editor <span class='terminalapp'>Vim</span>, and the terminal window will look similar to this (I have added my commit message below though):
 
 ```
 \# Please enter the commit message for your changes. Lines starting
@@ -271,7 +233,7 @@ On branch master
 nothing to commit, working tree clean
 ```
 
-You can simplify the _commit_ process by adding the parameter -m followed by the message, and _git_ will bypass the interactive message request:
+You can simplify the _commit_ process by adding the parameter -m followed by the message, and git will bypass the interactive message request:
 
 <span class='terminal'>git commit \-m \"Initial commit\"</span>
 
@@ -289,7 +251,7 @@ More details can be found on [Atlassian BitBucket git commit page](https://www.a
 
 ## git checkout
 
-In git jargon, a "checkout" switches between different versions of either files, commits or branches - you will encounter _checkout_ for several tasks. You can also use it to discard un-staged changes. Add some text to <span class='file'>Chapters.md</span>, you can use <span class='terminalapp'>pico<(span)> as shown above. Save the edits and then check status.
+In git jargon, a "checkout" switches between different versions of either files, commits or branches - you will encounter _checkout_ for several tasks. You can also use it to discard un-staged changes. Add some text to <span class='file'>Chapters.md</span>, you can use <span class='terminalapp'>pico</span> as shown above. Save the edits and then check status.
 
 <span class='terminal'>$ git status</span>
 
@@ -304,7 +266,7 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-git tells us to <span class='terminal'>use \"git checkout \-\- <file>...\" to discard changes in working directory</span>
+git tells us to <span class='terminal'>use \"git checkout \-\- \<file\>...\" to discard changes in working directory</span>
 
 So let us just do that and then check the status again:
 
@@ -400,7 +362,7 @@ You can now proceed and check out <span class='file'>Chapters.md</span> as in th
 
 ## .gitignore
 
-In the next section you are going to use the operating system (OS) for interfering in the working directory tree. This might leave traces from the OS, and _git_ will acknowledge these changes as something to keep track of. To prevent that from happening you can create a <span class='file'>.gitignore</span> file, and in that file list the files, file types and folders that _git_ should ignore:
+In the next section you are going to use the operating system (OS) for interfering in the working directory tree. This might leave traces from the OS, and git will acknowledge these changes as something to keep track of. To prevent that from happening you can create a <span class='file'>.gitignore</span> file, and in that file list the files, file types and folders that git should ignore:
 
 <span class='terminal'>$ pico .gitignore</span>
 
@@ -523,7 +485,7 @@ Changes to be committed:
 {% include widgets/toggle-code.html  toggle-text=text-capture  %}
 </div>
 
-List (<span class='terminalapp'>ls</span>) the files in your working directory, and <span class='file'>Chapters.md</span> should be back. Because you only removed the file using the operating system (not _git_), _git_ still has the file <span class='file'>Chapters.md</span> in the tracking system. Thus, to _commit_ the changes, simply type
+List (<span class='terminalapp'>ls</span>) the files in your working directory, and <span class='file'>Chapters.md</span> should be back. Because you only removed the file using the operating system (not git), git still has the file <span class='file'>Chapters.md</span> in the tracking system. Thus, to _commit_ the changes, simply type
 
 <span class='terminal'>$ git commit \-m \"Restoring Chapters.md\"</span>
 
@@ -544,7 +506,7 @@ nothing to commit, working tree clean
 
 ## git rm
 
-The command <span class='terminalapp'>git rm</span> is the _git_ equivalent of the operating system <span class='terminalapp'>rm</span>. The difference is that with <span class='terminalapp'>git rm</span> you also remove the file from the _staging_ tree.
+The command <span class='terminalapp'>git rm</span> is the git equivalent of the operating system <span class='terminalapp'>rm</span>. The difference is that with <span class='terminalapp'>git rm</span> you also remove the file from the _staging_ tree.
 
 <span class='terminal'>$ git rm Chapters.md</span>
 
@@ -613,9 +575,9 @@ And if you explore the _clone_ it should contain identical copies of the two fil
 
 ### git pull
 
-When you created your first _clone_ (in the section Clone I towards the beginning of this post) nothing was actually copied (or cloned) as you had not _staged_ and _commited_ any changes. To copy any changes made in the _master_ to an existing _clone_ also involves two steps: _fetch_ and _merge_. As explained on the [Atlassian Bitbucket in depth page on _git fetch_](https://www.atlassian.com/git/tutorials/syncing/git-fetch) _fetch_ is the 'safe' version of _pull_; it will not download files to working directory, only affect the head tree. To complete the update you must run _merge_ following _fetch_.
+When you created your first _clone_ (in the section Clone I towards the beginning of this post) nothing was actually copied (or cloned) as you had not _staged_ and _commited_ any changes. To copy any changes made in the _master_ to an existing _clone_ also involves two steps: _fetch_ and _merge_. As explained on the [Atlassian Bitbucket in depth page on _git fetch_](https://www.atlassian.com/git/tutorials/syncing/git-fetch) _fetch_ is the 'safe' version of _pull_; it will not download files to working directory, only affect the history (_HEAD_) tree. To complete the update you must run _merge_ following _fetch_.
 
-The _pull_ command combines _fetch_ and _merge_. Thus you can _pull_ any _staged_ and _commited_ changes by executing the <span class='terminalapp'>git pull</span> command from the _clone_. Technically <span class='terminalapp'>git pull</span> fetches the files (folders) from the _master_ (whether remote or local) to your _clone_ (or local) _working directory_ tree while also updating the _head_ tree with the _pulled_ changes.
+The _pull_ command combines _fetch_ and _merge_. Thus you can _pull_ any _staged_ and _commited_ changes by executing the <span class='terminalapp'>git pull</span> command from the _clone_. Technically <span class='terminalapp'>git pull</span> fetches the files (folders) from the _master_ (whether remote or local) to your _clone_ (or local) _working directory_ tree while also updating the history tree with the _pulled_ changes.
 
 Change directory, <span class='terminalapp'>cd</span> to the _clone_ you want to update:
 
@@ -774,7 +736,7 @@ As you see from the message returned in the Terminal window, the _pull_ was abor
 
 ### git diff
 
-When you have changes in both the _master_ the result is conflicting differences. You will not be able to _pull_ or _push_ any changes before solving the differences. To analyse the difference, use the command <span class='terminalapp'>git diff</span>, in our example you should execute the command from the _clone_ repository:
+When you have overlapping changes in both the _master_ and the _clone_ this result in conflicting differences. You will not be able to _pull_ or _push_ any changes before solving the differences. To analyse the difference, use the command <span class='terminalapp'>git diff</span>, in our example you should execute the command from the _clone_ repository:
 
 <span class='terminal'>$ git diff</span>
 
@@ -791,7 +753,7 @@ index dbda5d7..1c9c6a8 100644
 +### Arctic sea ice changes 1970 - 2020
 ```
 
-As I edited the documents (<span class='file'>Chapters.md</span>), the (black fonted) lines "### Albedo changes 1970 - 2020" and "### Cloud changes 1970 - 2020" occur in the version residing in _master_, whereas the copy residing in the _clone_ lack these two lines but instead include the last (green fonted) line with a plus sign "+" in front (### Arctic sea ice changes 1970 - 2020).
+As I edited the documents (<span class='file'>Chapters.md</span>), the lines "### Albedo changes 1970 - 2020" and "### Cloud changes 1970 - 2020" occur in the version residing in _master_, whereas the copy residing in the _clone_ lack these two lines but instead include the last (green fonted) line with a plus sign "+" in front (### Arctic sea ice changes 1970 - 2020).
 
 If you try the <span class='terminalapp'>git status</span> command in the _clone_, you will get some hints:
 
@@ -813,7 +775,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 
 You have neither _staged_ nor _commited_ the changes that you did in the _clone_, and when you are trying <span class='terminalapp'>git pull</span> the un-commited changes prevent the edited _master_ file to be copied.
 
-You can get more details by spefifying what _diff_ you want to analyse:
+You can get more details by specifying what _diff_ you want to analyse:
 
 <span class='terminal'>$ git diff --staged</span>
 
@@ -840,7 +802,7 @@ Fast-forward
  1 file changed, 2 insertions(+)
 ```
 
-If you look at the content of <span class='file'>Chapters.md</span> in your _clone_ it will (again) be identical to the original in _master_. But you have _stashed_ changes that you need to attend to. As your _clone_ is no longer identical to the _stashed_ version, there will be a conflict when you merge them. But the conflicting lines will be clearly marked and you need to edit the _clone_ copy manually. To retrieve the _stashed_ version you can either choose to automatically delete (or pop) it after merging, or keep it for _stashing_ multiple times. To keep the _stash_:
+If you look at the content of <span class='file'>Chapters.md</span> in your _clone_ it will (again) be identical to the original in _master_. But you have _stashed_ changes that you need to attend to. As your _clone_ is no longer identical to the _stashed_ version, there will be a conflict when you merge them. But the conflicting lines will be clearly marked and you need to manually edit the conflicts. To retrieve the _stashed_ version you can either choose to automatically delete (or pop) it after merging, or keep it for _stashing_ multiple times. To keep the _stash_:
 
 <span class='terminal'>$ git stash apply</span>
 
@@ -854,7 +816,7 @@ In both cases you will get the same result reported in the terminal window:
 Auto-merging Chapters.md
 CONFLICT (content): Merge conflict in Chapters.md
 ```
-If you open the copy of <span class='file'>Chapters.md</span> in your _clone_ you will see how <span class='terminalapp'>git</span> recorded the conflicts:
+If you open the copy of <span class='file'>Chapters.md</span> in your _clone_ you will see how git recorded the conflicts:
 
 ```
 <<<<<<< Updated upstream
@@ -864,7 +826,7 @@ If you open the copy of <span class='file'>Chapters.md</span> in your _clone_ yo
 >>>>>>> Stashed changes
 ```
 
-In our simple example we want the copy to include both the upstream update and the the stashed changes, so we simply delete the comments:
+In our simple example we want the copy to include both the upstream update and the _stashed_ changes, so we simply delete the comments:
 
 ```
 ### Glacier changes 1970 -2020
@@ -882,7 +844,7 @@ The [capabilities of git stash](https://www.atlassian.com/git/tutorials/saving-c
 
 ## git push
 
-The <span class='terminalapp'>git push</span> command is used to transfer data from a _clone_ repo to the _master_ repo (or from a local to a remote repo). In this post, however, we set up the _master_ as the primary development environment, and you will not be able to _push_ changes from the _clone_ to the _master_. To be able to do that you need to setup the _master_ while omitting the hidden working directory. How to go about creating such a git repository is the topic of the [parallel post on Shared master local git control](../blog-git-local-bare-master).
+The <span class='terminalapp'>git push</span> command is used to transfer data from a _clone_ repo to the _master_ repo (or from a local to a remote repo). In this post, however, we set up the _master_ as the primary development environment, and you will not be able to _push_ changes from the _clone_ to the _master_. To be able to do that you need to setup the _master_ while omitting the hidden working directory. How to go about creating such a git repository is the topic of the parallel post on [Shared master local git control](../git-local-bare-master).
 
 ## Resources
 

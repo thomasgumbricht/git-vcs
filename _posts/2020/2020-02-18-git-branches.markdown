@@ -17,15 +17,15 @@ share: true
 
 ## Introduction
 
-This post covers _git_ branches. The main references for this post are the [Atlassian Bitbucket pages on git branches](https://www.atlassian.com/git/tutorials/using-branches) and the Youtube [Introduction to Git - Branching and Merging](https://www.youtube.com/watch?v=FyAAIHHClqI) by David Mahler.
+This post covers git branches. The main references for this post are the [Atlassian Bitbucket pages on git branches](https://www.atlassian.com/git/tutorials/using-branches) and the Youtube [Introduction to Git - Branching and Merging](https://www.youtube.com/watch?v=FyAAIHHClqI) by David Mahler.
 
 ## Prerequisites
 
-This tutorial is a continuation of my posts on [Local git control](../git-local-use) and [Shared master local git control](../blog-git-local-bare-master).
+This tutorial is a continuation of my posts on [Local git control](../git-local-use) and [Shared master local git control](../git-local-bare-master).
 
 ## Create new repo
 
-The post on [Local git control](../blog-git-local-use) introduced _git_ repositories (repos) as directories with added functions. Open a <span class='app'>Terminal</span> window and navigate to the parent folder where you want to create your repository for this hands-on tutorial, then execute the following commands:
+The post on [Local git control](../git-local-use) introduced git repositories (repos) as directories with added functions. Open a <span class='app'>Terminal</span> window and navigate to the parent folder where you want to create your repository for this hands-on tutorial, then execute the following commands:
 
 <span class='terminal'>$ mkdir git-test-repo<br>$ cd git-test-repo<br>$ git init<br>$ pico README.md</span>
 
@@ -36,7 +36,7 @@ Test repository for branching
 ```
 Hit [ctrl]+[X] to exit <span class='terminalapp'>pico</span> and save the edits by pressing <span class='terminal'>Y</span> when asked.
 
-Add another text file, for example <span class='file'>Chapters.md</span> (<span class='terminal'>$ pico Chapters.md</span>), add some lines of text and save and exit. In my example I added the folowing text:
+Add another text file, for example <span class='file'>Chapters.md</span> (<span class='terminal'>$ pico Chapters.md</span>), add some lines of text and save and exit. In my example I added the following text:
 
 ```
 ## Ch1 The Sun
@@ -109,11 +109,11 @@ Changes to be committed:
 
 ```
 
-The color of the file names is now green (not shown above), _git_ is telling us that files are ready to be _commited_, or how to go about to _unstage_.
+The color of the file names is now green (not shown above), git is telling us that files are ready to be _commited_, or how to go about to _unstage_.
 
 ## git commit
 
-When you _commit_ something in _git_, you lock in the changes, like taking a snapshot. The status of your entire (_staged_) project will be stored, and you can always go back to this exact content as long as your repo exists. To commit all files and folders that have, at any tine, been _staged_:
+When you _commit_ something in git, you lock in the changes, like taking a snapshot. The status of your entire (_staged_) project will be stored (in the history, or _HEAD_ tree), and you can always go back to this exact content as long as your repo exists. To commit all files and folders that have, at any tine, been _staged_:
 
 <span class='terminal'>$ git commit \-am \"initial commit\"</span>
 
@@ -130,7 +130,7 @@ When you _commit_ something in _git_, you lock in the changes, like taking a sna
 
 ### git branch
 
-When you created the _git_ repo (with the command <span class='terminalapp'>git init</span>) the default branch _master_ was created. And all the operations so far has been reated to the _master_ branch. _git_ keeps track of which branch is active at any particular time through a pointer called _HEAD_ in the history tree. _HEAD_ follows the active branch (not the _commit_) and is called a symbolic pointer. Each branch have its own pointer, that points at the most recent _commit_ for that branch. This means that _HEAD_ indirectly, via the branch pointer, also points at the overall latest _commit_.
+When you created the git repo (with the command <span class='terminalapp'>git init</span>) the default branch _master_ was created. And all the operations so far has been reated to the _master_ branch. git keeps track of which branch is active at any particular time through a pointer called _HEAD_ in the history tree. _HEAD_ follows the active branch (not the _commit_) and is called a symbolic pointer. Each branch have its own pointer, that points at the most recent _commit_ for that branch. This means that _HEAD_ indirectly, via the branch pointer, also points at the overall latest _commit_.
 
 All changes that you do in the working directory tree, like ordinary editing, writing, copying, deleting etc, have no effect on any branch. Neither does _staging_ effect branches. It is only when you _commit_ changes that you attach the _staged_ changes to the active branch.
 
@@ -410,7 +410,7 @@ The added line is **not** there.
 
 ## git merge
 
-Merging is the _git_ process of joining a bifurcation back into the mainstream. In our example we have three unique _branches_, a _master_ and the two branch-offs b001 and b002 that bifurcated at the same _commit_ but contain different edits. Both b001 and b002 are "ahead of" _master_. We need to _merge_ both side branches back into _master_. The _merge_ command is at the core of _git_, but also requires some more careful considerations, the [Atlassian Bitbucket reference of git merge](https://www.atlassian.com/git/tutorials/using-branches/git-merge) will probably come in handy.
+Merging is the git process of joining a bifurcation back into the mainstream. In our example we have three unique _branches_, a _master_ and the two branch-offs b001 and b002 that bifurcated at the same _commit_ but contain different edits. Both b001 and b002 are "ahead of" _master_. We need to _merge_ both side branches back into _master_. The _merge_ command is at the core of git, but also requires some more careful considerations, the [Atlassian Bitbucket reference of git merge](https://www.atlassian.com/git/tutorials/using-branches/git-merge) will probably come in handy.
 
 ### Fast-Forward merge
 
@@ -502,7 +502,7 @@ Execute the merge:
 
 <span class='terminal'>$ git merge b002</span>
 
-As you did not give a message (-m) _git_ suggests a default message, either edit or accept it. The _merge_ will complete with a new message:
+As you did not give a message (-m) git suggests a default message, either edit or accept it. The _merge_ will complete with a new message:
 
 ```
 Merge made by the 'recursive' strategy.
@@ -603,7 +603,7 @@ Unmerged paths:
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-<span class='terminalapp'>git status</span> gives us an escape route, to abort the merge with the command <span class='terminalapp'>git merge \-\-abort</span>. But _git_ has also, behind the scenes, prepared the working directory version of <span class='file'>Chapters.md</span> to highlight the conflicts for you. Thus open the file and inspect the conflicts:
+<span class='terminalapp'>git status</span> gives us an escape route, to abort the merge with the command <span class='terminalapp'>git merge \-\-abort</span>. But git has also, behind the scenes, prepared the working directory version of <span class='file'>Chapters.md</span> to highlight the conflicts for you. Thus open the file and inspect the conflicts:
 
 <span class='terminal'>$ pico Chapters.md</span>
 
@@ -621,7 +621,7 @@ no changes added to commit (use "git add" and/or "git commit -a")
 >>>>>>> b003
 ```
 
-The lines above and below the equal signs ("=======") are where you find conflicts. Above are the edits from the _HEAD_ pointer (pointing to the receiving branch) and below are the edits from the branch to merge. You can edit this file, while also removing the _git_ markers, for example like this:
+The lines above and below the equal signs ("=======") are where you find conflicts. Above are the edits from the _HEAD_ pointer (pointing to the receiving branch) and below are the edits from the branch to merge. You can edit this file, while also removing the git markers, for example like this:
 
 ```
 ## Ch1 The Sun
@@ -658,7 +658,7 @@ Changes to be committed:
 {% include widgets/toggle-code.html  toggle-text=text-capture  %}
 </div>
 
-_commit_ the changes, if you do not give a message (-m) _git_ suggests a default, or you can enter a message interactively:
+_commit_ the changes, if you do not give a message (-m) git suggests a default, or you can enter a message interactively:
 
 <span class='terminal'>$ git commit</span>
 

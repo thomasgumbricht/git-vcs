@@ -20,99 +20,6 @@ share: true
 
 ## Introduction
 
-
-### SSH keys
-
-To add a second SSH key, with a few modifications outlined below you can follow the instructions at GitHub's page [Generating a new SSH key and adding it to the ssh-agent](https://help.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent#adding-your-ssh-key-to-the-ssh-agent).
-
-[Dual SSH  keys](https://gist.github.com/jexchan/2351996)
-Setting up a second pair of SSH keys (Mac OSX).
-
-
-Open a <span class='app'>terminal</span> window, and generate a SSH key for an email account that you have not yet generated a key for:
-
-<span class='terminal'>$ ssh-keygen -t rsa -b 4096 -C "your_other_email@example.com"</span>
-
-DO **NOT** accept the default with the returned message:
-
-```
-Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/"youruser"/.ssh/id_rsa):
-```
-
-as this is probably the name of your already existing key. Instead enter the full path to a new file in the path <span class='file'>/Users/"youruser"/.ssh/</span>, indicating the GitHub account for which this SSH key is intended. Let us say that your second GitHub account is "my_2nd_github_account", then answer like this:
-
-```
-Generating public/private rsa key pair.
-Enter file in which to save the key (/Users/"youruser"/.ssh/id_rsa_my_2nd_github_account):
-```
-
-Once the file is saved, you will be prompted for a passphrase, twice:
-
-```
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-```
-
-The SSH key will then be saved in two files, reported at the command line:
-
-```
-Your identification has been saved in /Users/"youruser"/.ssh/id_rsa_my_2nd_github_account.
-Your public key has been saved in /Users/"youruser"/.ssh/id_rsa_my_2nd_github_account.pub.
-```
-
-Followed by details on your SSH key:
-
-```
-The key fingerprint is:
-SHA256:+AseCretCodeWithDiffereNtAScIICodedSign&nrs your_other_email@example.com
-
-The key's randomart image is:
-+---[RSA 4096]----+
-|            o.o  |
-|            .= E.|
-|             .B.o|
-|              .= |
-|        S     = .|
-|       . o .  .= |
-|        . . . oo.|
-|             . o+|
-|              .o.|
-+----[SHA256]-----+
-```
-
-Start the ssh-agent in the background:
-
-<span class='terminal'>$ eval "$(ssh-agent -s)"<(span)>
-
-The command returns the pid (system tracker for the process)
-
-```
-Agent pid 16172
-```
-
-You now have to open the file <span class='file'>~/.ssh/config</span> and edit it so that it points towards your new SSH key:
-
-<span class='terminal'>pico ~/.ssh/config</span>:
-
-```
-Host github.com-my_2nd_github_account
-  AddKeysToAgent yes
-  UseKeychain yes
-  IdentityFile ~/.ssh/id_rsa_my_2nd_github_account
-```
-
-
-Add your new SSH private key to the ssh-agent and store your passphrase in the keychain:
-
-<span class='terminal'>$ ssh-add -K ~/.ssh/id_rsa_my_2nd_github_account</span>
-
-```
-Identity added: /Users/"youruser"/.ssh/id_rsa_my_2nd_github_account (your_other_email@example.com)
-```
-
-With your second SSH key setup on your machine, the registering of the SSH key in your GitHub account ("my_2nd_github_account"), is exactly like before.
-
 ### Creating a new GitHub repo
 
 If I have understood correctly, you can only create an online GitHub repo using a browser and being logged in to your GitHub account. Explained in the GitHub page on [Creating a new repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-new-repository). However, you only need to create the repo, everything else can be done from your local command line as outlined on another of GitHub´s help pages [Adding an existing project to GitHub using the command line](https://help.github.com/en/github/importing-your-projects-to-github/adding-an-existing-project-to-github-using-the-command-line).
@@ -215,9 +122,25 @@ To github.com:karttur/git-vcs.git
 
 #### _stage_ and _commit_ changes
 
-I created a complete suite of Jekyll pages, the blog you are looking at now. But I forgot to update my Jekyll configuration file, <span class='file'>\_config.yml</span>. I also added a figure and this post.
+I created a complete suite of Jekyll pages, the blog you are looking at now. But I forgot to update my Jekyll configuration file, <span class='file'>\_config.yml</span>. I also added a figure and this post. After completing these edits, I ran the following sequence of commands:
 
-Having fixed and saved the error, I ran the following sequence of commands:
+<span class='terminal'>$ git add .<br>$ git commit -am "initial updates"<br>$ git push origin gh-pages</span>
+
+```
+[gh-pages 7e07cc9] initial updates
+ 3 files changed, 189 insertions(+), 3 deletions(-)
+ create mode 100644 images/github-create-a-new-repo-git_vcs.png
+(base) Thomass-MacBook-Air:git-vcs thomasgumbricht$ git push origin gh-pages
+Enumerating objects: 14, done.
+Counting objects: 100% (14/14), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (8/8), 93.21 KiB | 15.53 MiB/s, done.
+Total 8 (delta 5), reused 0 (delta 0)
+remote: Resolving deltas: 100% (5/5), completed with 5 local objects.
+To github.com:karttur/git-vcs.git
+   aa6a314..7e07cc9  gh-pages -> gh-pages
+```
 
 
 \-am "\_config.yml update"ssh-add -K ~/.ssh/id_rsa_karttur
@@ -286,7 +209,7 @@ __init__.py		setup_db_class.py	version.py
 
 As a developer wanting to contribute, I suggest that you create a _branch_ called _dev_ and then use that for _staging_ and _committing_ edits to the codes and documents.
 
-Working with branches is explored in detail in the post [git branches in local repositories](../blog-git-branches), expanded for use with GitHub in [Remote repositories with GitHub](../blog-git-github) and also how to use with forks in [Forking repositories](../blog-git-forks).
+Working with branches is explored in detail in the post [git branches in local repositories](../git-branches), expanded for use with GitHub in [Remote repositories with GitHub](../git-github) and also how to use with forks in [Forking repositories](../git-forks).
 
 With the <span class='app'>Terminal</span> window still in your local repository ("setup_db"), type:
 
@@ -432,3 +355,9 @@ If the edits are extensive you can compare difference on a file basis:
 At this stage, with reviewed and verified edits that you feel Karttur's GeoImagine Framework would benefit from incorporating, you should create a pull request.
 
 ###### git merge
+
+##### Fork the complete framework, submodules and all
+
+https://www.reddit.com/r/git/comments/qatxi/fork_a_github_repo_that_has_submodule/
+
+[Submodules at Atlassian](https://www.atlassian.com/git/tutorials/git-submodule)
